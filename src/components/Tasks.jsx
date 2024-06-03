@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import TaskList from "./TaskList";
+import TaskQuantity from "./TaskQuantity";
 
 export default function Tasks(props) {
   // props
@@ -23,7 +25,7 @@ export default function Tasks(props) {
   }
 
   const agregarTarea = async () => {
-    if (tareaNombre === "") {
+    if (!tareaNombre) {
       alert("Por Favor Agrega Una Tarea");
       return;
     }
@@ -99,25 +101,12 @@ export default function Tasks(props) {
 
       <div className="lista">
         <ul>
-          {!!tareas?.length &&
-            tareas.map((tarea) => (
-              <li key={tarea.id}>
-                <span className="viñeta">•</span>
-                <span className="textoTarea">{tarea.label}</span>
-                <span
-                  className="BotonEliminarTarea"
-                  onClick={() => eliminarTarea(tarea.id)}
-                >
-                  X
-                </span>
-              </li>
-            ))}
+          {!!tareas?.length && (
+            <TaskList tareas={tareas} eliminarTarea={eliminarTarea} />
+          )}
         </ul>
-        <div className="d-flex align-items-end mt-5">
-          <span className="spanNumTareas">
-            Numero de tareas: {tareas?.length}
-          </span>
-        </div>
+
+        <TaskQuantity tareas={tareas} />
       </div>
     </>
   );
